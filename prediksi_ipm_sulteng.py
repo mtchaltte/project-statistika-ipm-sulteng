@@ -209,3 +209,109 @@ print(df_2026)
  
 df_2026.to_excel("hasil_prediksi_ipm_2026.xlsx", index=False)
 print("\nHasil prediksi berhasil disimpan ke file: hasil_prediksi_ipm_2026.xlsx")
+
+# ============================================================
+# VISUALISASI GRAFIK
+# ============================================================
+ 
+# Warna konsisten
+WARNA_LR  = "#5B9BD5"   # biru
+WARNA_SVR = "#ED7D31"   # oranye
+ 
+fig = plt.figure(figsize=(14, 11))
+fig.suptitle(
+    "Prediksi IPM Sulawesi Tengah — Regresi Linear vs SVR",
+    fontsize=15, fontweight="bold", y=0.98
+)
+ 
+gs = gridspec.GridSpec(2, 2, figure=fig, hspace=0.38, wspace=0.32)
+ 
+# ── Helper: garis ideal & batas sumbu ──────────────────────────────────────
+def batas_sama(ax, x_data, y_data, margin=1.5):
+    """Membuat skala sumbu x dan y sama dengan sedikit margin."""
+    semua = np.concatenate([x_data, y_data])
+    lo, hi = semua.min() - margin, semua.max() + margin
+    ax.set_xlim(lo, hi)
+    ax.set_ylim(lo, hi)
+    return lo, hi
+ 
+def tambah_garis_ideal(ax, lo, hi):
+    ax.plot([lo, hi], [lo, hi], "r--", lw=1.5, label="Ideal")
+    ax.legend(fontsize=9)
+ 
+# ── 1. Scatter Plot – Regresi Linear ───────────────────────────────────────
+ax1 = fig.add_subplot(gs[0, 0])
+ax1.scatter(y_test_reg, prediksi_regresi, color=WARNA_LR, alpha=0.75, edgecolors="white", s=70)
+lo, hi = batas_sama(ax1, y_test_reg.values, prediksi_regresi)
+tambah_garis_ideal(ax1, lo, hi)
+ax1.set_xlabel("IPM Aktual", fontsize=10)
+ax1.set_ylabel("IPM Prediksi", fontsize=10)
+ax1.set_title(f"Regresi Linear\nR²={r2_lr:.4f}", fontsize=11)
+ax1.grid(True, linestyle="--", alpha=0.4)
+ 
+# ── 2. Scatter Plot – SVR ──────────────────────────────────────────────────
+ax2 = fig.add_subplot(gs[0, 1])
+ax2.scatter(y_test_reg, prediksi_svr, color=WARNA_SVR, alpha=0.75, edgecolors="white", s=70)
+lo, hi = batas_sama(ax2, y_test_reg.values, prediksi_svr)
+tambah_garis_ideal(ax2, lo, hi)
+ax2.set_xlabel("IPM Aktual", fontsize=10)
+ax2.set_ylabel("IPM Prediksi", fontsize=10)
+ax2.set_title(f"SVR\nR²={r2_svr:.4f}", fontsize=11)
+ax2.grid(True, linestyle="--", alpha=0.4)
+ 
+# ── 3. Bar Chart – Perbandingan Metrik ─────────────────────────────────────
+ax3 = fig.add_subplot(gs[1, 0])
+metrik_nama  = ["MAE", "RMSE", "R²"]
+nilai_lr     = [mae_lr,  rmse_lr,  r2_lr]
+nilai_svr    = [mae_svr, rmse_svr, r2_svr]
+ 
+x = np.arange(len(metrik_nama))
+lebar = 0.35
+ 
+batang_lr  = ax3.bar(x - lebar/2, nilai_lr,  lebar, label="Regresi Linear", color=WARNA_LR,  alpha=0.85)
+batang_svr = ax3.bar(x + lebar/2, nilai_svr, lebar, label="SVR",            color=WARNA_SVR, alpha=0.85)
+ 
+# Label nilai di atas batang
+for bar in batang_lr:
+    ax3.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+             f"{bar.get_height():.3f}", ha="center", va="bottom", fontsize=8.5)
+for bar in batang_svr:
+    ax3.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+             f"{bar.get_height():.3f}", ha="center", va="bottom", fontsize=8.5)
+ 
+ax3.set_xticks(x)
+ax3.set_xticklabels(metrik_nama, fontsize=10)
+ax3.set_title("Perbandingan Metrik", fontsize=11)
+ax3.legend(fontsize=9)
+ax3.set_ylim(0, max(max(nilai_lr), max(nilai_svr)) * 1.25)
+ax3.grid(axis="y", linestyle="--", alpha=0.4)
+ 
+# ── 4. Matriks Korelasi ────────────────────────────────────────────────────
+ax4 = fig.add_subplot(gs[1, 1])
+ 
+kolom_korelasi = ["uhh", "hls", "rls", "pengeluaran_per_kapita", "ipm"]
+label_tampil   = ["UHH", "HLS", "RLS", "Pengeluaran", "IPM"]
+ 
+matriks_korel = df[kolom_korelasi].corr()
+ 
+sns.heatmap(
+    matriks_korel,
+    annot=True,
+    fmt=".2f",
+    cmap="RdBu_r",
+    vmin=0.6, vmax=1.0,
+    ax=ax4,
+    xticklabels=label_tampil,
+    yticklabels=label_tampil,
+    linewidths=0.5,
+    linecolor="white",
+    annot_kws={"size": 9}
+)
+ax4.set_title("Matriks Korelasi", fontsize=11)
+ax4.tick_params(axis="x", rotation=0, labelsize=9)
+ax4.tick_params(axis="y", rotation=0, labelsize=9)
+ 
+# ── Simpan & tampilkan ─────────────────────────────────────────────────────
+plt.savefig("visualisasi_ipm_sulteng.png", dpi=150, bbox_inches="tight")
+plt.show()
+print("\nVisualisasi berhasil disimpan ke file: visualisasi_ipm_sulteng.png")
