@@ -34,3 +34,18 @@ df = pd.read_excel(file_path, sheet_name="Data Utama", header=2)
  
 print("Data berhasil dibaca")
 print(df.to_string())
+
+# 3. Merapikan nama kolom
+df.columns = df.columns.str.replace("\n", " ").str.strip().str.lower()
+ 
+df = df.rename(columns={
+    "kabupaten/kota": "kabupaten_kota",
+    "uhh (tahun)": "uhh",
+    "hls (tahun)": "hls",
+    "rls (tahun)": "rls",
+    "pengeluaran per kapita (ribu rp/thn)": "pengeluaran_per_kapita",
+    "kategori ipm": "kategori_ipm",
+})
+ 
+print("\nNama kolom dataset setelah dirapikan:")
+print(df.columns.tolist())
