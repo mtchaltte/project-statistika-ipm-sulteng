@@ -53,3 +53,7 @@ print(df.columns.tolist())
 # 4. Membersihkan data
 df = df.drop(columns=["no"], errors="ignore")
 df = df.dropna(subset=["kabupaten_kota", "tahun", "ipm"])
+
+# 5. Kategori IPM
+print("\nJumlah data tiap kategori IPM:")
+print(df["kategori_ipm"].value_counts())
