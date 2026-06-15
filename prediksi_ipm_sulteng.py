@@ -182,3 +182,23 @@ for kabupaten in df["kabupaten_kota"].unique():
     })
  
 df_2026 = pd.DataFrame(data_2026)
+
+# ============================================================
+# PREDIKSI IPM DAN KATEGORI IPM TAHUN 2026
+# ============================================================
+ 
+X_2026 = df_2026[fitur]
+ 
+df_2026["prediksi_ipm"] = model_regresi.predict(X_2026)
+df_2026["kategori_prediksi"] = model_svc.predict(X_2026)
+ 
+df_2026["uhh"] = df_2026["uhh"].round(2)
+df_2026["hls"] = df_2026["hls"].round(2)
+df_2026["rls"] = df_2026["rls"].round(2)
+df_2026["pengeluaran_per_kapita"] = df_2026["pengeluaran_per_kapita"].round(2)
+df_2026["prediksi_ipm"] = df_2026["prediksi_ipm"].round(2)
+ 
+print("\n===================================================")
+print("HASIL PREDIKSI IPM TAHUN 2026")
+print("===================================================")
+print(df_2026)
