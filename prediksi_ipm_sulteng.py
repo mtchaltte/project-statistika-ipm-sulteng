@@ -57,3 +57,8 @@ df = df.dropna(subset=["kabupaten_kota", "tahun", "ipm"])
 # 5. Kategori IPM
 print("\nJumlah data tiap kategori IPM:")
 print(df["kategori_ipm"].value_counts())
+
+# 6. Menentukan fitur/input
+fitur = ["tahun", "kabupaten_kota", "uhh", "hls", "rls", "pengeluaran_per_kapita"]
+ 
+X = df[fitur]
