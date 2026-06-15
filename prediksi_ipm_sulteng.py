@@ -161,3 +161,24 @@ print(f"MAE  : {mae_svr:.2f}")
 print(f"MSE  : {mse_svr:.2f}")
 print(f"RMSE : {rmse_svr:.2f}")
 print(f"R2   : {r2_svr:.4f}")
+
+# ============================================================
+# MEMBUAT DATA ESTIMASI TAHUN 2026
+# ============================================================
+ 
+data_2026 = []
+ 
+for kabupaten in df["kabupaten_kota"].unique():
+    data_kab = df[df["kabupaten_kota"] == kabupaten]
+    data_terakhir = data_kab[data_kab["tahun"].isin([2021, 2022, 2023])]
+ 
+    data_2026.append({
+        "tahun": 2026,
+        "kabupaten_kota": kabupaten,
+        "uhh": data_terakhir["uhh"].mean(),
+        "hls": data_terakhir["hls"].mean(),
+        "rls": data_terakhir["rls"].mean(),
+        "pengeluaran_per_kapita": data_terakhir["pengeluaran_per_kapita"].mean()
+    })
+ 
+df_2026 = pd.DataFrame(data_2026)
