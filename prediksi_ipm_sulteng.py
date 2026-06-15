@@ -68,3 +68,11 @@ y_regresi = df["ipm"]
  
 # Target klasifikasi SVC -> memprediksi kategori IPM (Sedang/Tinggi/Sangat Tinggi)
 y_svc = df["kategori_ipm"]
+
+# 7. Preprocessing data
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("angka", StandardScaler(), ["tahun", "uhh", "hls", "rls", "pengeluaran_per_kapita"]),
+        ("kategori", OneHotEncoder(handle_unknown="ignore"), ["kabupaten_kota"])
+    ]
+)
