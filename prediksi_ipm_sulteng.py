@@ -202,3 +202,10 @@ print("\n===================================================")
 print("HASIL PREDIKSI IPM TAHUN 2026")
 print("===================================================")
 print(df_2026)
+
+# ============================================================
+# MENYIMPAN HASIL PREDIKSI KE EXCEL
+# ============================================================
+ 
+df_2026.to_excel("hasil_prediksi_ipm_2026.xlsx", index=False)
+print("\nHasil prediksi berhasil disimpan ke file: hasil_prediksi_ipm_2026.xlsx")
