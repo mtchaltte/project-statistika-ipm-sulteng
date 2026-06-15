@@ -62,3 +62,9 @@ print(df["kategori_ipm"].value_counts())
 fitur = ["tahun", "kabupaten_kota", "uhh", "hls", "rls", "pengeluaran_per_kapita"]
  
 X = df[fitur]
+
+# Target regresi -> memprediksi nilai IPM (angka)
+y_regresi = df["ipm"]
+ 
+# Target klasifikasi SVC -> memprediksi kategori IPM (Sedang/Tinggi/Sangat Tinggi)
+y_svc = df["kategori_ipm"]
