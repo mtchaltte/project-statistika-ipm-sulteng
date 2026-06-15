@@ -134,3 +134,30 @@ print("===================================================")
 print(f"Akurasi SVC: {akurasi:.4f}")
 print("\nClassification Report:")
 print(classification_report(y_test_svc, prediksi_svc))
+
+# ============================================================
+# MODEL 2b: SUPPORT VECTOR REGRESSION (untuk visualisasi scatter plot SVR)
+# ============================================================
+ 
+model_svr = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("model", SVR(kernel="rbf"))
+    ]
+)
+ 
+model_svr.fit(X_train_reg, y_train_reg)
+prediksi_svr = model_svr.predict(X_test_reg)
+ 
+mae_svr = mean_absolute_error(y_test_reg, prediksi_svr)
+mse_svr = mean_squared_error(y_test_reg, prediksi_svr)
+rmse_svr = np.sqrt(mse_svr)
+r2_svr = r2_score(y_test_reg, prediksi_svr)
+ 
+print("\n===================================================")
+print("HASIL EVALUASI SUPPORT VECTOR REGRESSION (SVR)")
+print("===================================================")
+print(f"MAE  : {mae_svr:.2f}")
+print(f"MSE  : {mse_svr:.2f}")
+print(f"RMSE : {rmse_svr:.2f}")
+print(f"R2   : {r2_svr:.4f}")
