@@ -76,3 +76,34 @@ preprocessor = ColumnTransformer(
         ("kategori", OneHotEncoder(handle_unknown="ignore"), ["kabupaten_kota"])
     ]
 )
+
+# ============================================================
+# MODEL 1: REGRESI LINEAR (memprediksi nilai IPM)
+# ============================================================
+ 
+X_train_reg, X_test_reg, y_train_reg, y_test_reg = train_test_split(
+    X, y_regresi, test_size=0.2, random_state=42
+)
+ 
+model_regresi = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("model", LinearRegression())
+    ]
+)
+ 
+model_regresi.fit(X_train_reg, y_train_reg)
+prediksi_regresi = model_regresi.predict(X_test_reg)
+ 
+mae_lr = mean_absolute_error(y_test_reg, prediksi_regresi)
+mse_lr = mean_squared_error(y_test_reg, prediksi_regresi)
+rmse_lr = np.sqrt(mse_lr)
+r2_lr = r2_score(y_test_reg, prediksi_regresi)
+ 
+print("\n===================================================")
+print("HASIL EVALUASI REGRESI LINEAR")
+print("===================================================")
+print(f"MAE  : {mae_lr:.2f}")
+print(f"MSE  : {mse_lr:.2f}")
+print(f"RMSE : {rmse_lr:.2f}")
+print(f"R2   : {r2_lr:.4f}")
