@@ -49,3 +49,7 @@ df = df.rename(columns={
  
 print("\nNama kolom dataset setelah dirapikan:")
 print(df.columns.tolist())
+
+# 4. Membersihkan data
+df = df.drop(columns=["no"], errors="ignore")
+df = df.dropna(subset=["kabupaten_kota", "tahun", "ipm"])
