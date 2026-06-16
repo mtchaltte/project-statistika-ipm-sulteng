@@ -14,10 +14,10 @@ Selain itu saya juga menambahkan SVR (Support Vector Regression) sebagai pemband
 
 Struktur File
 
-├── prediksi_ipm_sulteng.py                     # script utama
-├── Dataset_IPM_Sulawesi_Tengah_2019-2023.xlsx  # dataset dari BPS
-├── hasil_prediksi_ipm_2026.xlsx                # hasil prediksi tahun 2026
-└── visualisasi_ipm_sulteng.png                 # grafik visualisasi
+prediksi_ipm_sulteng.py                     # script utama
+Dataset_IPM_Sulawesi_Tengah_2019-2023.xlsx  # dataset dari BPS
+hasil_prediksi_ipm_2026.xlsx                # hasil prediksi tahun 2026
+visualisasi_ipm_sulteng.png                 # grafik visualisasi
 
 
 Cara Menjalankan
@@ -71,10 +71,10 @@ Visualisasi
 Script akan menghasilkan satu gambar berisi empat grafik yang disimpan sebagai visualisasi_ipm_sulteng.png:
 
 
-Scatter plot Regresi Linear — perbandingan IPM aktual vs prediksi dengan garis ideal
-Scatter plot SVR — sama seperti di atas menggunakan model SVR
-Bar chart perbandingan metrik — MAE, RMSE, dan R² kedua model secara berdampingan
-Matriks korelasi — heatmap hubungan antar fitur numerik dengan IPM
+Scatter plot Regresi Linear # perbandingan IPM aktual vs prediksi dengan garis ideal
+Scatter plot SVR # sama seperti di atas menggunakan model SVR
+Bar chart perbandingan metrik # MAE, RMSE, dan R² kedua model secara berdampingan
+Matriks korelasi # heatmap hubungan antar fitur numerik dengan IPM
 
 
 
@@ -83,5 +83,5 @@ Output
 Dua file yang dihasilkan setelah script selesai dijalankan:
 
 
-hasil_prediksi_ipm_2026.xlsx — tabel prediksi nilai IPM dan kategori per kabupaten/kota
-visualisasi_ipm_sulteng.png — grafik perbandingan model dan analisis korelasi
+hasil_prediksi_ipm_2026.xlsx  # tabel prediksi nilai IPM dan kategori per kabupaten/kota
+visualisasi_ipm_sulteng.png  # grafik perbandingan model dan analisis korelasi
